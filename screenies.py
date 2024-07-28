@@ -1,7 +1,8 @@
-import dotenv
 import ftplib
 import os
 import sys
+
+import dotenv
 
 from PIL import Image
 
