@@ -1,5 +1,5 @@
 # Usage
 1. Copy `.env.sample` and replace the values if necessary
-2. Install the required packages (or `just install` if [Just](https://github.com/casey/just) is present)
+2. Install the required packages (`python -m pip install -r requirements.txt`)
 3. Open FTPD on your 3DS device
-4. Run `python3 screenies.py <output_dir>` (or `just convert <output_dir>`. output_dir is `.` by default)
+4. Run `python screenies.py <output_dir>` 
