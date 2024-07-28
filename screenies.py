@@ -1,7 +1,8 @@
+import dotenv
 import ftplib
 import os
 import sys
-import dotenv
+
 from PIL import Image
 
 dotenv.load_dotenv()
@@ -15,10 +16,8 @@ def stich(top, bottom, output):
     new_height = height * 2
 
     new_im = Image.new('RGB', (new_width, new_height), (0, 0, 0))
-
     new_im.paste(top_img , (0, 0))
     new_im.paste(bottom_img , (int((new_width - bottom_img .size[0])/2), height))
-
     new_im.save(output)
 
 
@@ -35,7 +34,8 @@ if __name__ == "__main__":
     if out_dir[-1] == "/":
         out_dir = out_dir[:-1]
     if not os.path.exists(out_dir):
-        os.makedirs(out_dir)
+        print(f"Output directory {out_dir} does not exist")
+        sys.exit(1)
     
     ftp = ftplib.FTP()
     ftp.connect(FTP_IP, FTP_PORT)
@@ -52,7 +52,6 @@ if __name__ == "__main__":
         elif "_bot.bmp" in img:
             images[name][1] = img
 
-    # make tmp dir
     if not os.path.exists("tmp"):
         os.makedirs("tmp")
 
@@ -65,22 +64,18 @@ if __name__ == "__main__":
                 print(f"Skipping {output_filename}")
                 continue
 
-            top = images[name][0]
-            bottom = images[name][1]
+            top, bottom = images[name]
             if top is not None and bottom is not None:
-                # first, download the images
                 with open("tmp/top.bmp", "wb") as f:
                     ftp.retrbinary("RETR " + top, f.write)
                 with open("tmp/bottom.bmp", "wb") as f:
                     ftp.retrbinary("RETR " + bottom, f.write)
-
-                
                 stich("tmp/top.bmp", "tmp/bottom.bmp", output_file)
     except Exception as e:
         print(e)       
     finally:
         import shutil
         shutil.rmtree("tmp")
-            
+    
     ftp.quit()
         
