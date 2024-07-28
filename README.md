@@ -1,4 +1,4 @@
-Script I wrote for personal convenience to copy & stitch [Luma3DS](https://github.com/LumaTeam/Luma3DS) screenshots 
+Script to copy & stitch [Luma3DS](https://github.com/LumaTeam/Luma3DS) screenshots 
 
 # Usage
 1. Install the required packages (`python -m pip install -r requirements.txt`)
